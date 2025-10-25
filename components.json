@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@agri-smart/shared/components",
+    "utils": "@agri-smart/shared/lib/utils",
+    "ui": "@agri-smart/shared/components/ui",
+    "lib": "@agri-smart/shared/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide"
+}
