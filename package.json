@@ -2,7 +2,17 @@
   "name": "@agri-smart/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "farmer": "nx serve farmer",
+    "frontend": "nx serve frontend",
+    "build:farmer": "nx build farmer",
+    "build:frontend": "nx build frontend",
+    "lint:farmer": "nx lint farmer",
+    "lint:frontend": "nx lint frontend",
+    "test:farmer": "nx test farmer",
+    "test:frontend": "nx test frontend",
+    "dev": "nx run-many --target=serve --projects=farmer,frontend --parallel"
+  },
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.14.5",
