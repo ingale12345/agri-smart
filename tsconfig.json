@@ -8,7 +8,9 @@
     },
     {
       "path": "./libs/shared"
+    },
+    {
+      "path": "./apps/farmer"
     }
   ]
 }
-// /home/ue/agr/agri-smart/libs/shared

@@ -15,7 +15,7 @@
     "utils": "@agri-smart/shared/lib/utils",
     "ui": "@agri-smart/shared/components/ui",
     "lib": "@agri-smart/shared/lib",
-    "hooks": "@/hooks"
+    "hooks": "@agri-smart/shared/hooks"
   },
   "iconLibrary": "lucide"
 }
