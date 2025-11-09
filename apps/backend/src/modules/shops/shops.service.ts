@@ -2,15 +2,22 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 import { Shop, ShopDocument } from './schemas/shop.schema';
 import { CreateShopDto, UpdateShopDto } from './dto/shop.dto';
+import { User, UserDocument } from '../auth/schemas/user.schema';
+import { UserRole } from '../../common/decorators/roles.decorator';
 
 @Injectable()
 export class ShopsService {
-  constructor(@InjectModel(Shop.name) private shopModel: Model<ShopDocument>) {}
+  constructor(
+    @InjectModel(Shop.name) private shopModel: Model<ShopDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>
+  ) {}
 
   async create(createShopDto: CreateShopDto) {
     const existingShop = await this.shopModel.findOne({
@@ -21,8 +28,56 @@ export class ShopsService {
       throw new ConflictException('Shop with this name or code already exists');
     }
 
-    const shop = new this.shopModel(createShopDto);
+    // Extract admin user fields (using type assertion to handle optional properties)
+    const adminEmail = (createShopDto as any).adminEmail;
+    const adminPassword = (createShopDto as any).adminPassword;
+    const adminName = (createShopDto as any).adminName;
+
+    // Validate admin user creation fields
+    if (adminEmail) {
+      if (!adminPassword || !adminName) {
+        throw new BadRequestException(
+          'adminEmail, adminPassword, and adminName are required together when creating a shop admin user'
+        );
+      }
+
+      // Check if user with this email already exists
+      const existingUser = await this.userModel.findOne({
+        email: adminEmail,
+      });
+
+      if (existingUser) {
+        throw new ConflictException(
+          'User with this email already exists. Please use a different email for the shop admin.'
+        );
+      }
+    }
+
+    // Create the shop (exclude admin fields from shop data)
+    const {
+      adminEmail: _,
+      adminPassword: __,
+      adminName: ___,
+      ...shopData
+    } = createShopDto as any;
+    const shop = new this.shopModel(shopData);
     const savedShop = await shop.save();
+
+    // Create shop admin user if provided
+    if (adminEmail && adminPassword && adminName) {
+      const hashedPassword = await bcrypt.hash(adminPassword, 10);
+
+      const shopAdminUser = new this.userModel({
+        email: adminEmail,
+        password: hashedPassword,
+        name: adminName,
+        role: UserRole.SHOP_ADMIN,
+        shopId: savedShop._id,
+        isActive: true,
+      });
+
+      await shopAdminUser.save();
+    }
 
     // Transform MongoDB document to plain object with id field
     const shopObj = savedShop.toObject() as ShopDocument & {

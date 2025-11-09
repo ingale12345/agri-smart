@@ -5,6 +5,8 @@ import {
   IsArray,
   IsEmail,
   ValidateNested,
+  MinLength,
+  ValidateIf,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -60,6 +62,23 @@ export class CreateShopDto {
   @ValidateNested()
   @Type(() => ThemeDto)
   theme?: ThemeDto;
+
+  // Shop Admin User Creation (optional)
+  @ApiProperty({ required: false, description: 'Email for shop admin user' })
+  @IsOptional()
+  @IsEmail()
+  adminEmail?: string;
+
+  @ApiProperty({ required: false, description: 'Password for shop admin user (min 6 characters)' })
+  @ValidateIf((o) => o.adminEmail)
+  @IsString()
+  @MinLength(6)
+  adminPassword?: string;
+
+  @ApiProperty({ required: false, description: 'Name for shop admin user' })
+  @ValidateIf((o) => o.adminEmail)
+  @IsString()
+  adminName?: string;
 }
 
 export class UpdateShopDto {

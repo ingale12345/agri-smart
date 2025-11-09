@@ -44,12 +44,15 @@ export function CreateShopDialog({ open, onOpenChange }: CreateShopDialogProps) 
         primary: '',
         secondary: '',
       },
+      adminEmail: '',
+      adminPassword: '',
+      adminName: '',
     },
   });
 
   const onSubmit = async (data: CreateShopFormData) => {
     try {
-      await createShop.mutateAsync({
+      const shopData: any = {
         name: data.name,
         code: data.code.toUpperCase(),
         address: data.address || undefined,
@@ -63,12 +66,27 @@ export function CreateShopDialog({ open, onOpenChange }: CreateShopDialogProps) 
               secondary: data.theme.secondary || undefined,
             }
           : undefined,
-      });
+      };
+
+      // Only include admin user fields if adminEmail is provided
+      if (data.adminEmail && data.adminEmail.trim() !== '') {
+        shopData.adminEmail = data.adminEmail;
+        shopData.adminPassword = data.adminPassword;
+        shopData.adminName = data.adminName;
+      }
+
+      await createShop.mutateAsync(shopData);
       toast.success('Shop created successfully!');
       form.reset();
       onOpenChange(false);
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || 'Failed to create shop');
+      const errorMessage = 
+        error?.response?.data?.message || 
+        (Array.isArray(error?.response?.data?.message) 
+          ? error.response.data.message.join(', ') 
+          : error?.message) ||
+        'Failed to create shop';
+      toast.error(errorMessage);
     }
   };
 
@@ -195,6 +213,58 @@ export function CreateShopDialog({ open, onOpenChange }: CreateShopDialogProps) 
                 )}
               />
             </div>
+            
+            {/* Shop Admin User Creation Section */}
+            <div className="border-t pt-4 mt-4">
+              <h3 className="text-lg font-semibold mb-4">Shop Admin User (Optional)</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Create a shop admin user account that can login to manage this shop.
+              </p>
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="adminEmail"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Admin Email</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="admin@shop.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="adminName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Admin Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Admin Full Name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="adminPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Admin Password</FormLabel>
+                        <FormControl>
+                          <Input type="password" placeholder="Min 6 characters" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+            
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
                 Cancel

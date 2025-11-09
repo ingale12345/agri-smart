@@ -23,6 +23,17 @@ export function ProtectedRoute({
       return <Navigate to="/admin/login" replace />;
     } else if (requiredShopId) {
       return <Navigate to={`/${requiredShopId}/login`} replace />;
+    } else {
+      // Try to extract shopId from URL path (e.g., /MAULI/dashboard -> MAULI)
+      const pathParts = location.pathname.split('/').filter(Boolean);
+      if (
+        pathParts.length > 0 &&
+        pathParts[0] !== 'admin' &&
+        pathParts[0] !== 'unauthorized'
+      ) {
+        const urlShopId = pathParts[0];
+        return <Navigate to={`/${urlShopId}/login`} replace />;
+      }
     }
     return <Navigate to="/admin/login" replace />;
   }

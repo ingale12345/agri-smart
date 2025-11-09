@@ -12,6 +12,10 @@ const shopRoutes: RouteObject[] = [
     element: <ShopDashboard />,
   },
   {
+    path: 'dashboard',
+    element: <ShopDashboard />,
+  },
+  {
     path: 'roles',
     element: <ShopRoles />,
   },
@@ -34,4 +38,3 @@ const shopRoutes: RouteObject[] = [
 ];
 
 export default shopRoutes;
-
