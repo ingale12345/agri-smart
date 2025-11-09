@@ -122,7 +122,7 @@ export class DeliveryService {
       updateDeliveryDto.status === DeliveryStatus.DELIVERED &&
       delivery.status !== DeliveryStatus.DELIVERED
     ) {
-      updateDeliveryDto.deliveredAt = new Date();
+      delivery.deliveredAt = new Date();
     }
 
     Object.assign(delivery, updateDeliveryDto);

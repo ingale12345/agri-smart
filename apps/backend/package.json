@@ -74,6 +74,13 @@
             "buildTarget": "@agri-smart/backend:build:production"
           }
         }
+      },
+      "seed": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "tsc apps/backend/src/seed.ts --outDir apps/backend/dist --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --experimentalDecorators --emitDecoratorMetadata --target es2021 --resolveJsonModule --declaration false --sourceMap false && node -r reflect-metadata apps/backend/dist/seed.js",
+          "cwd": "."
+        }
       }
     }
   },

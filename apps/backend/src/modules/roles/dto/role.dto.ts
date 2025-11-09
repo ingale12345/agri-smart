@@ -101,6 +101,7 @@ export class EntitlementPermissionDto {
   @ApiProperty({
     description: 'Permissions for this entitlement',
     type: 'object',
+    additionalProperties: false,
     example: {
       read: { enabled: true, isAllowed: true },
       create: { enabled: true, isAllowed: true },
