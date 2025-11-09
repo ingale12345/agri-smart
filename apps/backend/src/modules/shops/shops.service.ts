@@ -1,14 +1,16 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Shop, ShopDocument } from './schemas/shop.schema';
 import { CreateShopDto, UpdateShopDto } from './dto/shop.dto';
 
 @Injectable()
 export class ShopsService {
-  constructor(
-    @InjectModel(Shop.name) private shopModel: Model<ShopDocument>,
-  ) {}
+  constructor(@InjectModel(Shop.name) private shopModel: Model<ShopDocument>) {}
 
   async create(createShopDto: CreateShopDto) {
     const existingShop = await this.shopModel.findOne({
@@ -20,11 +22,31 @@ export class ShopsService {
     }
 
     const shop = new this.shopModel(createShopDto);
-    return shop.save();
+    const savedShop = await shop.save();
+
+    // Transform MongoDB document to plain object with id field
+    const shopObj = savedShop.toObject() as ShopDocument & {
+      _id: Types.ObjectId;
+    };
+    return {
+      ...shopObj,
+      id: shopObj._id.toString(),
+    };
   }
 
   async findAll() {
-    return this.shopModel.find().populate('categories', 'name').exec();
+    const shops = await this.shopModel
+      .find()
+      .populate('categories', 'name')
+      .exec();
+    // Transform MongoDB documents to plain objects with id field
+    return shops.map((shop) => {
+      const shopObj = shop.toObject() as ShopDocument & { _id: Types.ObjectId };
+      return {
+        ...shopObj,
+        id: shopObj._id.toString(),
+      };
+    });
   }
 
   async findOne(id: string) {
@@ -36,7 +58,13 @@ export class ShopsService {
     if (!shop) {
       throw new NotFoundException('Shop not found');
     }
-    return shop;
+
+    // Transform MongoDB document to plain object with id field
+    const shopObj = shop.toObject() as ShopDocument & { _id: Types.ObjectId };
+    return {
+      ...shopObj,
+      id: shopObj._id.toString(),
+    };
   }
 
   async findByCode(code: string) {
@@ -48,7 +76,13 @@ export class ShopsService {
     if (!shop) {
       throw new NotFoundException('Shop not found');
     }
-    return shop;
+
+    // Transform MongoDB document to plain object with id field
+    const shopObj = shop.toObject() as ShopDocument & { _id: Types.ObjectId };
+    return {
+      ...shopObj,
+      id: shopObj._id.toString(),
+    };
   }
 
   async update(id: string, updateShopDto: UpdateShopDto) {
@@ -67,12 +101,23 @@ export class ShopsService {
       });
 
       if (existingShop) {
-        throw new ConflictException('Shop with this name or code already exists');
+        throw new ConflictException(
+          'Shop with this name or code already exists'
+        );
       }
     }
 
     Object.assign(shop, updateShopDto);
-    return shop.save();
+    const updatedShop = await shop.save();
+
+    // Transform MongoDB document to plain object with id field
+    const shopObj = updatedShop.toObject() as ShopDocument & {
+      _id: Types.ObjectId;
+    };
+    return {
+      ...shopObj,
+      id: shopObj._id.toString(),
+    };
   }
 
   async remove(id: string) {
@@ -85,4 +130,3 @@ export class ShopsService {
     return { message: 'Shop deleted successfully' };
   }
 }
-

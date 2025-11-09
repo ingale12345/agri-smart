@@ -10,6 +10,10 @@ const adminRoutes: RouteObject[] = [
     element: <AdminDashboard />,
   },
   {
+    path: 'dashboard',
+    element: <AdminDashboard />,
+  },
+  {
     path: 'shops',
     element: <AdminShops />,
   },
@@ -24,4 +28,3 @@ const adminRoutes: RouteObject[] = [
 ];
 
 export default adminRoutes;
-
