@@ -1,11 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { MongooseModule } from '@nestjs/mongoose';
 import { getModelToken } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
-import { User, UserSchema } from './modules/auth/schemas/user.schema';
-import { Category, CategorySchema } from './modules/categories/schemas/category.schema';
-import { Entitlement, EntitlementSchema } from './modules/entitlements/schemas/entitlement.schema';
+import { User } from './modules/auth/schemas/user.schema';
+import { Category } from './modules/categories/schemas/category.schema';
+import { Entitlement } from './modules/entitlements/schemas/entitlement.schema';
 import { UserRole } from './common/decorators/roles.decorator';
 import { Model } from 'mongoose';
 
@@ -15,11 +14,17 @@ async function bootstrap() {
   try {
     // Get models from the app context
     const userModel = app.get(getModelToken(User.name)) as Model<User>;
-    const categoryModel = app.get(getModelToken(Category.name)) as Model<Category>;
-    const entitlementModel = app.get(getModelToken(Entitlement.name)) as Model<Entitlement>;
+    const categoryModel = app.get(
+      getModelToken(Category.name)
+    ) as Model<Category>;
+    const entitlementModel = app.get(
+      getModelToken(Entitlement.name)
+    ) as Model<Entitlement>;
 
     // Seed SUPER_ADMIN user
-    const existingAdmin = await userModel.findOne({ email: 'admin@agrismart.com' });
+    const existingAdmin = await userModel.findOne({
+      email: 'admin@agrismart.com',
+    });
     if (!existingAdmin) {
       const hashedPassword = await bcrypt.hash('admin123', 10);
       const admin = new userModel({
@@ -30,7 +35,9 @@ async function bootstrap() {
         isActive: true,
       });
       await admin.save();
-      console.log('✅ SUPER_ADMIN user created: admin@agrismart.com / admin123');
+      console.log(
+        '✅ SUPER_ADMIN user created: admin@agrismart.com / admin123'
+      );
     } else {
       console.log('ℹ️  SUPER_ADMIN user already exists');
     }
@@ -70,7 +77,9 @@ async function bootstrap() {
     ];
 
     for (const categoryData of categories) {
-      const existingCategory = await categoryModel.findOne({ name: categoryData.name });
+      const existingCategory = await categoryModel.findOne({
+        name: categoryData.name,
+      });
       if (!existingCategory) {
         const category = new categoryModel(categoryData);
         await category.save();
@@ -181,9 +190,13 @@ async function bootstrap() {
       if (!existingEntitlement) {
         const entitlement = new entitlementModel(entitlementData);
         await entitlement.save();
-        console.log(`✅ Entitlement created: ${entitlementData.entitlementName}`);
+        console.log(
+          `✅ Entitlement created: ${entitlementData.entitlementName}`
+        );
       } else {
-        console.log(`ℹ️  Entitlement already exists: ${entitlementData.entitlementName}`);
+        console.log(
+          `ℹ️  Entitlement already exists: ${entitlementData.entitlementName}`
+        );
       }
     }
 
@@ -197,4 +210,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-
