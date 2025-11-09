@@ -11,42 +11,42 @@ export class CreateProductDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  sku: string;
+  sku!: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  unit: string;
+  unit!: string;
 
   @ApiProperty()
   @IsNumber()
   @Min(0)
-  price: number;
+  price!: number;
 
   @ApiProperty()
   @IsNumber()
   @Min(0)
-  gst: number;
+  gst!: number;
 
   @ApiProperty()
   @IsNumber()
   @Min(0)
-  stock: number;
+  stock!: number;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  categoryId: string;
+  categoryId!: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  shopId: string;
+  shopId!: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -116,31 +116,31 @@ export class UpdateProductDto {
 
 export class ProductResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  name: string;
+  name!: string;
 
   @ApiProperty()
-  sku: string;
+  sku!: string;
 
   @ApiProperty()
-  unit: string;
+  unit!: string;
 
   @ApiProperty()
-  price: number;
+  price!: number;
 
   @ApiProperty()
-  gst: number;
+  gst!: number;
 
   @ApiProperty()
-  stock: number;
+  stock!: number;
 
   @ApiProperty()
-  categoryId: string;
+  categoryId!: string;
 
   @ApiProperty()
-  shopId: string;
+  shopId!: string;
 
   @ApiProperty({ required: false })
   branchId?: string;

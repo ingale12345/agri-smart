@@ -12,20 +12,20 @@ import { UserRole } from '../../../common/decorators/roles.decorator';
 export class CreateUserDto {
   @ApiProperty()
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty()
   @IsString()
   @MinLength(6)
-  password: string;
+  password!: string;
 
   @ApiProperty()
   @IsString()
-  name: string;
+  name!: string;
 
   @ApiProperty({ enum: UserRole })
   @IsEnum(UserRole)
-  role: UserRole;
+  role!: UserRole;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -72,22 +72,22 @@ export class UpdateUserDto {
 
 export class UserResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  email: string;
+  email!: string;
 
   @ApiProperty()
-  name: string;
+  name!: string;
 
   @ApiProperty({ enum: UserRole })
-  role: UserRole;
+  role!: UserRole;
 
   @ApiProperty({ required: false })
   shopId?: string;
 
   @ApiProperty()
-  isActive: boolean;
+  isActive!: boolean;
 
   @ApiProperty({ required: false })
   phone?: string;

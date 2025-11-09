@@ -15,7 +15,7 @@ export type DeliveryDocument = Delivery & Document;
 @Schema({ timestamps: true })
 export class Delivery {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Order', required: true, unique: true })
-  orderId: MongooseSchema.Types.ObjectId;
+  orderId!: MongooseSchema.Types.ObjectId;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: false })
   deliveryAgentId?: MongooseSchema.Types.ObjectId;

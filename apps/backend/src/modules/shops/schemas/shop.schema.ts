@@ -6,10 +6,10 @@ export type ShopDocument = Shop & Document;
 @Schema({ timestamps: true })
 export class Shop {
   @Prop({ required: true, unique: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: true, unique: true })
-  code: string;
+  code!: string;
 
   @Prop({ required: false })
   address?: string;
@@ -24,7 +24,7 @@ export class Shop {
     type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Category' }],
     default: [],
   })
-  categories: MongooseSchema.Types.ObjectId[];
+  categories!: MongooseSchema.Types.ObjectId[];
 
   @Prop({ required: false })
   logoUrl?: string;
@@ -43,4 +43,3 @@ export class Shop {
 }
 
 export const ShopSchema = SchemaFactory.createForClass(Shop);
-

@@ -6,10 +6,10 @@ export type BranchDocument = Branch & Document;
 @Schema({ timestamps: true })
 export class Branch {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Shop', required: true })
-  shopId: MongooseSchema.Types.ObjectId;
+  shopId!: MongooseSchema.Types.ObjectId;
 
   @Prop({ required: false })
   location?: string;

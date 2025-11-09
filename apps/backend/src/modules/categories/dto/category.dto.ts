@@ -4,7 +4,7 @@ import { IsString, IsOptional } from 'class-validator';
 export class CreateCategoryDto {
   @ApiProperty()
   @IsString()
-  name: string;
+  name!: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -36,10 +36,10 @@ export class UpdateCategoryDto {
 
 export class CategoryResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  name: string;
+  name!: string;
 
   @ApiProperty({ required: false })
   description?: string;

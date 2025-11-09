@@ -30,10 +30,10 @@ export type OrderDocument = Order & Document;
 @Schema({ timestamps: true })
 export class Order {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
-  customerId: MongooseSchema.Types.ObjectId;
+  customerId!: MongooseSchema.Types.ObjectId;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Shop', required: true })
-  shopId: MongooseSchema.Types.ObjectId;
+  shopId!: MongooseSchema.Types.ObjectId;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Branch', required: false })
   branchId?: MongooseSchema.Types.ObjectId;
@@ -51,19 +51,19 @@ export class Order {
     ],
     required: true,
   })
-  items: OrderItem[];
+  items!: OrderItem[];
 
   @Prop({ required: true, default: 0 })
-  subtotal: number;
+  subtotal!: number;
 
   @Prop({ required: true, default: 0 })
-  gst: number;
+  gst!: number;
 
   @Prop({ required: true, default: 0 })
-  totalAmount: number;
+  totalAmount!: number;
 
   @Prop({ required: true, default: 0 })
-  discount: number; // Subsidy discount
+  discount!: number; // Subsidy discount
 
   @Prop({
     type: String,
@@ -91,4 +91,3 @@ export class Order {
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
 OrderSchema.index({ invoiceNumber: 1 }, { unique: true, sparse: true });
-

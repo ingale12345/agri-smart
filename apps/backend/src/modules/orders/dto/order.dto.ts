@@ -16,19 +16,19 @@ export class OrderItemDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  productId: string;
+  productId!: string;
 
   @ApiProperty()
   @IsNumber()
   @Min(1)
-  quantity: number;
+  quantity!: number;
 }
 
 export class CreateOrderDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  shopId: string;
+  shopId!: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -43,7 +43,7 @@ export class CreateOrderDto {
 
   @ApiProperty({ enum: OrderType })
   @IsEnum(OrderType)
-  orderType: OrderType;
+  orderType!: OrderType;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -65,7 +65,7 @@ export class CreateOrderDto {
 export class UpdateOrderStatusDto {
   @ApiProperty({ enum: OrderStatus })
   @IsEnum(OrderStatus)
-  status: OrderStatus;
+  status!: OrderStatus;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -75,37 +75,37 @@ export class UpdateOrderStatusDto {
 
 export class OrderResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  customerId: string;
+  customerId!: string;
 
   @ApiProperty()
-  shopId: string;
+  shopId!: string;
 
   @ApiProperty({ required: false })
   branchId?: string;
 
   @ApiProperty({ type: [Object] })
-  items: any[];
+  items!: any[];
 
   @ApiProperty()
-  subtotal: number;
+  subtotal!: number;
 
   @ApiProperty()
-  gst: number;
+  gst!: number;
 
   @ApiProperty()
-  totalAmount: number;
+  totalAmount!: number;
 
   @ApiProperty()
-  discount: number;
+  discount!: number;
 
   @ApiProperty({ enum: OrderStatus })
-  status: OrderStatus;
+  status!: OrderStatus;
 
   @ApiProperty({ enum: OrderType })
-  orderType: OrderType;
+  orderType!: OrderType;
 
   @ApiProperty({ required: false })
   deliveryAddress?: string;
@@ -116,4 +116,3 @@ export class OrderResponseDto {
   @ApiProperty({ required: false })
   notes?: string;
 }
-

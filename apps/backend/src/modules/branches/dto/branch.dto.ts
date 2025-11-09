@@ -14,28 +14,28 @@ class GeoTagDto {
   @IsNumber()
   @Min(-90)
   @Max(90)
-  lat: number;
+  lat!: number;
 
   @ApiProperty()
   @IsNumber()
   @Min(-180)
   @Max(180)
-  lng: number;
+  lng!: number;
 
   @ApiProperty()
   @IsNumber()
   @Min(0)
-  radius: number;
+  radius!: number;
 }
 
 export class CreateBranchDto {
   @ApiProperty()
   @IsString()
-  name: string;
+  name!: string;
 
   @ApiProperty()
   @IsString()
-  shopId: string;
+  shopId!: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -69,13 +69,13 @@ export class UpdateBranchDto {
 
 export class BranchResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  name: string;
+  name!: string;
 
   @ApiProperty()
-  shopId: string;
+  shopId!: string;
 
   @ApiProperty({ required: false })
   location?: string;

@@ -23,11 +23,11 @@ class ThemeDto {
 export class CreateShopDto {
   @ApiProperty()
   @IsString()
-  name: string;
+  name!: string;
 
   @ApiProperty()
   @IsString()
-  code: string;
+  code!: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -108,13 +108,13 @@ export class UpdateShopDto {
 
 export class ShopResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  name: string;
+  name!: string;
 
   @ApiProperty()
-  code: string;
+  code!: string;
 
   @ApiProperty({ required: false })
   address?: string;
@@ -126,7 +126,7 @@ export class ShopResponseDto {
   contact?: string;
 
   @ApiProperty({ type: [String] })
-  categories: string[];
+  categories!: string[];
 
   @ApiProperty({ required: false })
   logoUrl?: string;

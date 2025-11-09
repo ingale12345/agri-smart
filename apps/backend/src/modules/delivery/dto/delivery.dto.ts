@@ -17,19 +17,19 @@ class LocationDto {
   @IsNumber()
   @Min(-90)
   @Max(90)
-  lat: number;
+  lat!: number;
 
   @ApiProperty()
   @IsNumber()
   @Min(-180)
   @Max(180)
-  lng: number;
+  lng!: number;
 }
 
 export class CreateDeliveryDto {
   @ApiProperty()
   @IsString()
-  orderId: string;
+  orderId!: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -68,16 +68,16 @@ export class UpdateDeliveryDto {
 
 export class DeliveryResponseDto {
   @ApiProperty()
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  orderId: string;
+  orderId!: string;
 
   @ApiProperty({ required: false })
   deliveryAgentId?: string;
 
   @ApiProperty({ enum: DeliveryStatus })
-  status: DeliveryStatus;
+  status!: DeliveryStatus;
 
   @ApiProperty({ required: false })
   estimatedTime?: Date;

@@ -11,16 +11,16 @@ import { UserRole } from '../../../common/decorators/roles.decorator';
 export class SignupDto {
   @ApiProperty()
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty()
   @IsString()
   @MinLength(6)
-  password: string;
+  password!: string;
 
   @ApiProperty()
   @IsString()
-  name: string;
+  name!: string;
 
   @ApiProperty({ enum: UserRole, required: false })
   @IsOptional()
@@ -46,33 +46,33 @@ export class SignupDto {
 export class LoginDto {
   @ApiProperty()
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty()
   @IsString()
-  password: string;
+  password!: string;
 }
 
 export class ShopLoginDto {
   @ApiProperty()
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty()
   @IsString()
-  password: string;
+  password!: string;
 
   @ApiProperty()
   @IsString()
-  shopId: string;
+  shopId!: string;
 }
 
 export class AuthResponseDto {
   @ApiProperty()
-  accessToken: string;
+  accessToken!: string;
 
   @ApiProperty()
-  user: {
+  user!: {
     id: string;
     email: string;
     name: string;
