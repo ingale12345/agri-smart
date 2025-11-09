@@ -1,5 +1,15 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import type { IUser, IEntitlementPermission, IAuthResponse } from '@agri-smart/types';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
+import type {
+  IUser,
+  IEntitlementPermission,
+  IAuthResponse,
+} from '@agri-smart/types';
 import { authAPI } from '../api/auth/auth.api';
 
 interface AuthContextType {
@@ -39,9 +49,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const loadUser = () => {
       try {
-        const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token');
-        const storedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
-        
+        const storedToken =
+          localStorage.getItem('token') || sessionStorage.getItem('token');
+        const storedUser =
+          localStorage.getItem('user') || sessionStorage.getItem('user');
+
         if (storedToken && storedUser) {
           setToken(storedToken);
           setUser(JSON.parse(storedUser));
@@ -60,7 +72,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     loadUser();
   }, []);
 
-  const login = async (email: string, password: string, shopIdentifier?: string) => {
+  const login = async (
+    email: string,
+    password: string,
+    shopIdentifier?: string
+  ) => {
     try {
       setIsLoading(true);
       let response: IAuthResponse;
@@ -71,7 +87,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // Import shopAPI to resolve shop code to ID
         const { shopAPI } = await import('../api/shops/shop.api');
         let actualShopId = shopIdentifier;
-        
+
         try {
           // Try to get shop by code first (more user-friendly URLs use codes)
           const shop = await shopAPI.getByCode(shopIdentifier);
@@ -80,8 +96,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           // If not found by code, assume it's an ID
           actualShopId = shopIdentifier;
         }
-        
-        response = await authAPI.shopLogin({ email, password, shopId: actualShopId });
+
+        response = await authAPI.shopLogin({
+          email,
+          password,
+          shopId: actualShopId,
+        });
       } else {
         response = await authAPI.login({ email, password });
       }
@@ -105,10 +125,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async () => {
     try {
       await authAPI.logout();
-      setToken(null);
-      setUser(null);
     } catch (error) {
       console.error('Logout error:', error);
+    } finally {
+      // Always clear local state and storage
+      setToken(null);
+      setUser(null);
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
+      localStorage.removeItem('user');
+      sessionStorage.removeItem('user');
     }
   };
 
@@ -136,4 +162,3 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-

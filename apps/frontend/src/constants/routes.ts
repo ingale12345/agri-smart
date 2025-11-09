@@ -1,4 +1,8 @@
 export const ROUTES = {
+  AUTH: {
+    ADMIN_LOGIN: '/admin/login',
+    SHOP_LOGIN: '/:shopId/login',
+  },
   ADMIN: {
     BASE: '/admin',
     LOGIN: '/admin/login',
@@ -23,4 +27,3 @@ export const ROUTES = {
     NOT_FOUND: '*',
   },
 } as const;
-
