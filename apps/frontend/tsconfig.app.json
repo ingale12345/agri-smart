@@ -17,6 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@agri-smart/shared": ["../../libs/shared/src/index.ts"],
+      "@agri-smart/shared/*": ["../../libs/shared/src/*"],
       "@agri-smart/types": ["../../libs/types/src/index.ts"],
       "@agri-smart/types/*": ["../../libs/types/src/*"]
     }

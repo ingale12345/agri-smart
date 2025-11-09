@@ -14,7 +14,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.use(helmet());
-  app.use(cors.default({ origin: '*' }));
+  app.use(cors({ origin: '*' }));
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
