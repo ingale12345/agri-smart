@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "rootDir": "src",
     "outDir": "dist",
+    "lib": ["ESNext", "DOM"],
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
     "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,

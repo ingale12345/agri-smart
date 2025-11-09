@@ -18,6 +18,8 @@ export default defineConfig(() => ({
   resolve: {
     alias: {
       '@agri-smart/shared': path.resolve(__dirname, '../../libs/shared/src'),
+      '@agri-smart/types': path.resolve(__dirname, '../../libs/types/src'),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   plugins: [react(), tailwindcss()],
