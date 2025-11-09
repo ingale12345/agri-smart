@@ -20,7 +20,11 @@
     "customConditions": ["@agri-smart/source"],
     "paths": {
       "@agri-smart/shared": ["libs/shared/src/index.ts"],
-      "@agri-smart/shared/*": ["libs/shared/src/*"]
+      "@agri-smart/shared/*": ["libs/shared/src/*"],
+      "@agri-smart/backend": ["apps/backend/src/index.ts"],
+      "@agri-smart/backend/*": ["apps/backend/src/*"],
+      "@agri-smart/types": ["libs/types/src/index.ts"],
+      "@agri-smart/types/*": ["libs/types/src/*"]
     }
   }
 }
